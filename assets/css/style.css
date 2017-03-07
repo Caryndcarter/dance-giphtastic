@@ -6,15 +6,16 @@ html {
 .background  {
 	width:100%;
 	overflow:auto;
+	background-color: #ededed;
 }
 
-.ballet {
-	height: 600px;
+/*.ballet {
+	height: 100%
 	width: 1200px;
 	position:absolute;
 	width: 100%;
 	z-index: 0;
-}
+}*/
 
 .footer {
 	width: 100%;
