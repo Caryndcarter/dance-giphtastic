@@ -1,47 +1,76 @@
 $(document).ready(function () {
 
 var moves = ["Svetlana Zakharova", "American Ballet Theater", "Fouette", "Misty Copeland", "Pirouettes", "Pointe Shoes", "Grand Jete", "Ballet Barre", "Arabesque"];
-var buttonValue = ""; 
+var selectedButtonValue = ""; 
 var queryURL = ""; 
 displayButtons (); 
-renderGifs(); 
+getButtonValue(); 
 
-function displayButtons () {
+/* function displays buttons for item in the array and trims white space at the end of each array item if any */
+function displayButtons () { 
 	for (var i = 0; i < moves.length; i++) {
-		var moveButton = $("<button type='button' class='btn btn-default move-button' value=" + moves[i] + ">" + moves[i] + "</button>");
+		moves[i]= moves[i].trim(); 
+		var moveButton = $("<button type='button' class='btn btn-default move-button'>" + moves[i] + "</button>");
 		$(".buttons-area").append(moveButton);
 	}
 }
 
-function renderGifs () {
+/*function gets button value which is the text of the button and replaces any white space with +. */
+function getButtonValue () {
 	$(".move-button").on("click", function() {
-		buttonValue = $(this).attr("value"); 
-		console.log(buttonValue);
-		queryUrl = "http://api.giphy.com/v1/gifs/search?q=" + buttonValue + "&api_key=dc6zaTOxFJmzC&limit=10";
-		console.log(queryUrl);
-		
-		
-		
+		$(".giphs").html("<br><br>");
+		selectedButtonValue = $(this).text(); 
+		console.log(selectedButtonValue);
+		if(selectedButtonValue.indexOf(" ") >= 0){
+			selectedButtonValue = selectedButtonValue.replace(/\s/g, "+");
+		}
+		console.log(selectedButtonValue);
+		renderGifs(); 
+	});
+	
+}
+
+function addMove () {
+	$(".add-move").on("click", function () {
+		var newMove = $("#move").text; 
+		console.log(newMove);
+		moves.push(newMove);
+		displayButtons(); 
 	});
 }
+
+function renderGifs () {
+	queryUrl = "http://api.giphy.com/v1/gifs/search?q=" + selectedButtonValue + "&api_key=dc6zaTOxFJmzC&limit=10";
+		console.log(queryUrl);
 		
+	$.ajax({
+		url: queryUrl,
+        method: "GET"
+     })
+		.done(function(response) {
+         var results = response.data;
+         console.log(response.data);
 
-			// $.ajax({
-	// 	url: queryURL,
- //        method: "GET"
- //     })
-	// 	.done(function(response) {
- //         var results = response.data;
- //         console.log(response.data);
-	// });
-//       var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
-//         person + "&api_key=dc6zaTOxFJmzC&limit=10";
+         for (var i = 0; i < results.length; i++) {
+         	var rating = response.data[i].rating.toUpperCase(); 
+         	$(".giphs").append("<figure><img class='gifAnimate' src='" + response.data[i].images.fixed_height.url+ "'>");
+         	$(".giphs").append("<figcaption class='caption'>Rating: " + rating + "</figcaption></figure>");
+         	
+         }
+	});
+		
+}
 
-//       $.ajax({
+// function stillGifs () {
+// 	$(".gifAnimate").on("click", function() {
+// 		var selectedGif = $(this).data;
+
+
+// 	});
+// }
+
+
 //           
-//         
-
-//           for (var i = 0; i < results.length; i++) {
 //             var gifDiv = $("<div class='item'>");
 
 //             var rating = results[i].rating;
