@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-var moves = ["Svetlana Zakharova", "American Ballet Theater", "Fouette", "Misty Copeland", "Pirouettes", "Pointe Shoes", "Grand Jete", "Ballet Barre", "Arabesque"];
+var moves = ["Svetlana Zakharova", "American Ballet Theater", "Fouette", "Corps de Ballet", "Grand Jete", "Pas de Deux", "Arabesque", "Paris Opera Ballet"];
 var selectedButtonValue = ""; 
 var queryURL = ""; 
 displayButtons (); 
@@ -14,6 +14,18 @@ function displayButtons () {
 		$(".buttons-area").append(moveButton);
 	}
 }
+
+/*function adds new buttons for new dance terms */
+$(".add-move").on("click", function (event) {
+	event.preventDefault(); 
+	var newMove = $("#move").val(); 
+		console.log(newMove);		
+	moves.push(newMove);
+		console.log(moves);
+	$(".buttons-area").html("");
+		displayButtons();
+		getButtonValue(); 
+});
 
 /*function gets button value which is the text of the button and replaces any white space with +. */
 function getButtonValue () {
@@ -30,15 +42,7 @@ function getButtonValue () {
 	
 }
 
-function addMove () {
-	$(".add-move").on("click", function () {
-		var newMove = $("#move").text; 
-		console.log(newMove);
-		moves.push(newMove);
-		displayButtons(); 
-	});
-}
-
+/* goes out to the giphy API and renders the first 10 gifs for the topic of the button */
 function renderGifs () {
 	queryUrl = "http://api.giphy.com/v1/gifs/search?q=" + selectedButtonValue + "&api_key=dc6zaTOxFJmzC&limit=10";
 		console.log(queryUrl);
@@ -54,38 +58,15 @@ function renderGifs () {
          for (var i = 0; i < results.length; i++) {
          	var rating = response.data[i].rating.toUpperCase(); 
          	$(".giphs").append("<figure><img class='gifAnimate' src='" + response.data[i].images.fixed_height.url+ "'>");
-         	$(".giphs").append("<figcaption class='caption'>Rating: " + rating + "</figcaption></figure>");
-         	
+         	$(".giphs").append("<figcaption class='caption'>Rating: " + rating + "</figcaption></figure><br>");	
          }
-	});
+
+		});
 		
 }
 
-// function stillGifs () {
-// 	$(".gifAnimate").on("click", function() {
-// 		var selectedGif = $(this).data;
 
 
-// 	});
-// }
-
-
-//           
-//             var gifDiv = $("<div class='item'>");
-
-//             var rating = results[i].rating;
-
-//             var p = $("<p>").text("Rating: " + rating);
-
-//             var personImage = $("<img>");
-//             personImage.attr("src", results[i].images.fixed_height.url);
-
-//             gifDiv.prepend(p);
-//             gifDiv.prepend(personImage);
-
-//             $("#gifs-appear-here").prepend(gifDiv);
-//           }
-//         });	
 
 
 });
