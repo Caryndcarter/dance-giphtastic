@@ -12,7 +12,7 @@ addNew();
 /*function gets button value which is the text of the button and replaces any white space with +. */
 function getButtonValue () {
 	$(".move-button").on("click", function() {
-		$(".giphs").html("<br><br>");
+		$(".giphs").empty();
 		selectedButtonValue = $(this).text(); 
 		console.log(selectedButtonValue);
 		if(selectedButtonValue.indexOf(" ") >= 0){
@@ -34,7 +34,7 @@ function addNew () {
 			console.log(moves);
 		$(".buttons-area").empty();
 			displayButtons();
-		$(".giphs").html("<br><br>");
+		$(".giphs").empty();
 		if(newMove.indexOf(" ") >= 0){
 			newMove = newMove.replace(/\s/g, "+");
 		}
@@ -75,9 +75,9 @@ function renderGifs () {
          	$(".giphs").append("<figcaption class='caption'>Rating: " + rating + "</figcaption></figure><br>");	
          }
 
-         $(".gifAnimate").on("click", function () {
-         	$(".")
-         });
+         // $(".gifAnimate").on("click", function () {
+         // 	$(".")
+         // });
 
 		});
 		
