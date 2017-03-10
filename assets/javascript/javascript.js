@@ -68,7 +68,7 @@ function displayButtons () {
 --Goes out to the giphy API with the url this function builds.
 --Calls the renderGifs funtion which makes the gifs from the giphy API appear.*/
 function getUrl (moveTerm) {
-	queryUrl = "http://api.giphy.com/v1/gifs/search?q=" +  moveTerm + "&api_key=dc6zaTOxFJmzC&limit=10";	
+	queryUrl = "https://api.giphy.com/v1/gifs/search?q=" +  moveTerm + "&api_key=dc6zaTOxFJmzC&limit=10";	
 	renderGifs(); 
 }
 
