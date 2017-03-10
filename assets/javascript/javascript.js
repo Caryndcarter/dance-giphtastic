@@ -8,31 +8,42 @@ displayButtons();
 getButtonValue ();
 addNew(); 
 
-/*function gets button value which is the text of the button and replaces any white space with +. */
+/*function 
+--Gets button value which is the text of the button. 
+--Stores that text and replaces any white space with + in a variable selectedButtonValue. 
+--Empties out the giphs area so that the new gifs can appear. 
+--Sends the selectedButtonValueto the getUrl function.*/
 function getButtonValue () {
 	$(".move-button").on("click", function() {
+		
 		$(".giphs").empty();
+		
 		selectedButtonValue = $(this).text(); 
-		console.log(selectedButtonValue);
+
 		if(selectedButtonValue.indexOf(" ") >= 0){
 			selectedButtonValue = selectedButtonValue.replace(/\s/g, "+");
 		}
-		console.log(selectedButtonValue);
-		getUrl(selectedButtonValue); 
-		// addNew(); 
+
+		getUrl(selectedButtonValue);  
 	});
 }	
 
-/*function adds new buttons for new dance terms */
+/*function 
+--Adds new buttons for new dance terms that user supplies. 
+--Adds the new move to the moves array. 
+--Calls displaysButtons to include the new button in the buttons above. 
+--Empties the giphs area so that the newly entered move can have its gifs appear upon entering it. 
+--Takes the newMove and takes out whitespace and gives it to the getURL function. */
 function addNew () {
 	$(".add-move").on("click", function (event) {
 		event.preventDefault(); 
 		newMove = $("#move").val(); 
-			console.log(newMove);		
+					
 		moves.push(newMove);
-			console.log(moves);
+			
 		$(".buttons-area").empty();
 			displayButtons();
+
 		$(".giphs").empty();
 		if(newMove.indexOf(" ") >= 0){
 			newMove = newMove.replace(/\s/g, "+");
@@ -43,7 +54,8 @@ function addNew () {
 	});
 }
 
-/* function displays buttons for item in the array and trims white space at the end of each array item if any */
+/* function 
+--Displays buttons for items in the moves array and trims white space at the end of each array item if any */
 function displayButtons () { 
 	for (var i = 0; i < moves.length; i++) {
 		moves[i]= moves[i].trim(); 
@@ -52,13 +64,24 @@ function displayButtons () {
 	}
 }
 
-/* goes out to the giphy API and renders the first 10 gifs for the topic of the button */
+/* function 
+--Goes out to the giphy API with the url this function builds.
+--Calls the renderGifs funtion which makes the gifs from the giphy API appear.*/
 function getUrl (moveTerm) {
-	queryUrl = "http://api.giphy.com/v1/gifs/search?q=" +  moveTerm + "&api_key=dc6zaTOxFJmzC&limit=10";
-		console.log(queryUrl);
+	queryUrl = "http://api.giphy.com/v1/gifs/search?q=" +  moveTerm + "&api_key=dc6zaTOxFJmzC&limit=10";	
 	renderGifs(); 
 }
 
+/* function 
+--makes a GET request of the giphy API with the url from getUrl. 
+--Inserts a label with directions above the gifs.
+--Inserts a rating made to uppercase for each gif.
+--Adds class "gif" to all gifs.
+--Adds id of [i] to all gifs. 
+--Adds a data-state of still to gifs upon first render.
+--Adds the src of the image.
+--Renders the images and the ratings.
+*/
 function renderGifs () {		
 	$.ajax({
 		url: queryUrl,
@@ -68,48 +91,43 @@ function renderGifs () {
          var results = response.data;
          console.log(response.data);
 
+         $(".giphs").append("<label>Click gifs to animate or stop them</label><br>");
          for (var i = 0; i < results.length; i++) {
          	var rating = response.data[i].rating.toUpperCase(); 
+         	
          	var a = $("<img>");
-         		a.addClass=("gifStill");
+         		a.addClass("gif");
          		a.attr("id", [i]);
-         		a.attr("state", "still");
+         		a.attr("data-state", "still");
          		a.attr("src", response.data[i].images.fixed_height_still.url);
          	$(".giphs").append(a);
-         	// $(".giphs").append("<figure><img class='gifStill' src='" + response.data[i].images.fixed_height_still.url+ "'>");
+         	
          	$(".giphs").append("<figcaption class='caption'>Rating: " + rating + "</figcaption></figure><br>");	 
-
-         	$("#0").on("click", function animate (){
-         		var b = $(this);
-				  	b.attr("state", "animated");
-         			b.attr("src", response.data[0].images.fixed_height.url);
-         			$("#0").html(b);
-         		// if(b.state = "animated") {
-         		// 	b.attr("state", "still");
-         		// 	b.attr("src",response.data[0].images.fixed_height_still.url);
-         		// }
-         	});
-
-
          	} 
 
-     	});
+         /*listener on click of any gif with the class "gif" 
+         --Changes the data state to "still or "animated" as needed to 
+         stop and start the animation.*/
+		$(".gif").on("click", function () {
+		
+			if ($(this).data("state") === "still") {
+				var id = $(this).attr("id");
+				$(this).attr("src",response.data[id].images.fixed_height.url);
+				$(this).data("state", "animated");
+
+			} else if ($(this).data("state") === "animated") {
+				var id = $(this).attr("id");
+				$(this).attr("src", response.data[id].images.fixed_height_still.url);
+				$(this).data("state", "still");
+			}
+
+		});
 
 
-        /*Need function that assigns an id to all the gifs that are rendered OR a way to find the object number in the array?
-         Then need to have a function that listens for when that id is clicked
-         then when it is clicked it needs to swap out the still giph for the animated one AND change the class to "animated" 
-         Maybe it should be an IF statement....if still, then animate; else if animate, still.*/
-
-
+    });
 		
 }
 
-// $(".giphs").on("click", function () {
-// 	var clickedGif = $(this);
-// 	clickedGif.attr("state", "animated");
-// 	clickedGif.attr("src", response.data[this.id].images.fixed_height.url);
 
-// });
-
+         	
 });
