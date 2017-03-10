@@ -1,9 +1,63 @@
 $(document).ready(function () {
 
 var moves = ["Svetlana Zakharova", "American Ballet Theater", "Fouette", "Corps de Ballet", "Grand Jete", "Pas de Deux", "Arabesque", "Paris Opera Ballet"];
+var gifs = [
+	{ 
+		rating: "", 
+		src: "",
+		state: ""
+	},
+	{ 
+		rating: "", 
+		src: "",
+		state: ""
+	},
+	{ 
+		rating: "", 
+		src: "",
+		state: ""
+	},
+	{ 
+		rating: "", 
+		src: "",
+		state: ""
+	},
+	{ 
+		rating: "", 
+		src: "",
+		state: ""
+	},
+	{ 
+		rating: "", 
+		src: "",
+		state: ""
+	},
+	{ 
+		rating: "", 
+		src: "",
+		state: ""
+	},
+	{ 
+		rating: "", 
+		src: "",
+		state: ""
+	},
+	{ 
+		rating: "", 
+		src: "",
+		state: ""
+	},
+	{ 
+		rating: "", 
+		src: "",
+		state: ""
+	}
+];
+
 var selectedButtonValue; 
 var queryURL; 
 var newMove;
+var results; 
 displayButtons(); 
 getButtonValue ();
 addNew(); 
@@ -65,51 +119,43 @@ function renderGifs () {
         method: "GET"
      })
 		.done(function(response) {
-         var results = response.data;
+         results = response.data;
          console.log(response.data);
+       
 
-         for (var i = 0; i < results.length; i++) {
-         	var rating = response.data[i].rating.toUpperCase(); 
-         	var a = $("<img>");
-         		a.addClass=("gifStill");
-         		a.attr("id", [i]);
-         		a.attr("state", "still");
-         		a.attr("src", response.data[i].images.fixed_height_still.url);
-         	$(".giphs").append(a);
+
+for (var i = 0; i < results.length; i++) {
+    gifs[i].rating = response.data[i].rating.toUpperCase(); 
+      	var a = gifs[i].src;
+      	 	a = $("<img>");
+        	a.addClass=("gifStill");
+         	a.attr("id", [i]);
+         	a.attr("state", "still");
+       		a.attr("src", response.data[i].images.fixed_height_still.url);
+       	$(".giphs").append(a);
+       	console.log(a); 
          	// $(".giphs").append("<figure><img class='gifStill' src='" + response.data[i].images.fixed_height_still.url+ "'>");
-         	$(".giphs").append("<figcaption class='caption'>Rating: " + rating + "</figcaption></figure><br>");	 
+        $(".giphs").append("<figcaption class='caption'>Rating: " + gifs[i].rating + "</figcaption></figure><br>");	 
 
-         	$("#0").on("click", function animate (){
-         		var b = $(this);
-				  	b.attr("state", "animated");
-         			b.attr("src", response.data[0].images.fixed_height.url);
-         			$("#0").html(b);
-         		// if(b.state = "animated") {
-         		// 	b.attr("state", "still");
-         		// 	b.attr("src",response.data[0].images.fixed_height_still.url);
-         		// }
-         	});
+       	$("#0").on("click", function animate (){
+         	var b = $(this);
+		  	b.attr("state", "animated");
+		  	b.attr("src", response.data[0].images.fixed_height.url);
+         	$("#0").html(b);
+         		
+         });
 
 
-         	} 
+} 
 
-     	});
+	});
+}    
 
 
-        /*Need function that assigns an id to all the gifs that are rendered OR a way to find the object number in the array?
-         Then need to have a function that listens for when that id is clicked
-         then when it is clicked it needs to swap out the still giph for the animated one AND change the class to "animated" 
-         Maybe it should be an IF statement....if still, then animate; else if animate, still.*/
 
 
 		
-}
 
-// $(".giphs").on("click", function () {
-// 	var clickedGif = $(this);
-// 	clickedGif.attr("state", "animated");
-// 	clickedGif.attr("src", response.data[this.id].images.fixed_height.url);
 
-// });
 
 });
