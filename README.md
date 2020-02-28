@@ -5,11 +5,11 @@ See it here:
 
 ## See for cool dance giphs!
 
-* Select from the series of ballet topics and you will see ballet dancing giphs.  
+* Select from the given series of ballet topics and you will see ballet dancing giphs.  
 * You will see 10 giphs at a time, and they are refreshed with each new selection.    
 * You can individually click on the giphs to play them and then click on them again to stop them.  
 * You can also type any search topic into the text box and you will see related giphs. 
 * When you type-in a new search topic, a button is created for you that adds it to your collection of topics.   
-* You can add as many new topics as you like. 
+* You can add as many new topics as you like! 
 
 ![Screenshot of dance giphtastic app]()
