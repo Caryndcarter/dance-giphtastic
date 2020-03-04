@@ -5,7 +5,7 @@ See it here:
 
 ## See cool dance giphs!
 
-* Select from the given series of ballet topics and you will see ballet dancing giphs.  
+* Select from the given series of ballet topics and you will see ballet dancing giphs. 
 * You will see 10 giphs at a time, and they are refreshed with each new selection.    
 * You can individually click on the giphs to play them and then click on them again to stop them.  
 * You can also type any search topic into the text box and you will see related giphs. 
