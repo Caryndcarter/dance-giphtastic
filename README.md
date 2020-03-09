@@ -3,7 +3,7 @@ A one-page app I built during my time in the Northwestern Coding Bootcamp that t
 
 See it here: 
 
-## See cool dance giphs!
+## Preview ballet dancing giphs!
 
 * Select from the given series of ballet topics and you will see ballet dancing giphs.  
 * You will see 10 giphs at a time, and they are refreshed with each new selection.    
